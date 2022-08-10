@@ -1,0 +1,32 @@
+.container{
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+body{
+    background: url('../img/bg.jpg') no-repeat center /cover;
+    height: 100vh;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+h1{
+    color: #fff;
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 40px;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #fff,
+    0 0 40px #0ff,
+    0 0 80px #0ff,
+    0 0 90px #0ff,
+    0 0 100px #0ff,
+    0 0 150px #0ff;
+}
+
+@import './modules/shapes';

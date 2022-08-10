@@ -1,0 +1,66 @@
+.shapes{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__wrapper{
+        width: 600px;
+        height: 600px;
+        background: #943ebd;
+        border-radius: 30px;
+        padding: 30px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    &__list{
+        width: 140px;
+        height: 140px;
+        border-radius: 10px;
+        cursor: pointer;
+        background: #7b319f;
+        overflow: hidden;
+        transition: 0.3s all;
+        &:hover, &:focus{
+            outline: none;
+        }
+        div{
+            transition: 0.3s all;
+        }
+    }
+    &_circle{
+        div{
+            background: url('../../img/circle.png') no-repeat center;
+            height: 100%;
+            background-size: contain;
+        }
+    }
+    &_box{
+        div{
+            background: url('../../img/box.png') no-repeat center; 
+            background-size: contain;
+            height: 100%;
+        }
+    }
+    &_rhomb{
+        div{
+            background: url('../../img/rhomb.png') no-repeat center; 
+            background-size: contain;
+            height: 100%;
+        }
+    }
+    &_triangle{
+        div{
+            background: url('../../img/triangle.png') no-repeat center; 
+            background-size: contain;
+            height: 100%;
+        }
+    }
+    &_active{
+        opacity: 1;
+    }
+    &_close{
+        transition: 0.3s all;
+        opacity: 0;
+    }
+}
