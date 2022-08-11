@@ -4,13 +4,13 @@
 }
 
 body{
-    background: url('../img/bg.jpg') no-repeat center /cover;
-    height: 100vh;
+    background: url('../img/bg.jpg') #943ebd no-repeat center /cover;
 }
 
 *{
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box;
 }
 
 h1{

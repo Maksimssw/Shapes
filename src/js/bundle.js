@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const shapes = () => {
     const shapesWrapper = document.querySelector('.shapes__wrapper');
+    const modal = document.querySelector('.modal');
 
     // Создание блоков и добавление в обёртку
     for(let i = 0; i < 16; i++){
@@ -54,84 +55,111 @@ const shapes = () => {
         }
     })
 
+    // Удаление всех активных классов и закрытие фигур
+    function deletingAllActiveClass(){
+        blocksList.forEach(item => {
+            item.classList.remove('shapes_active');
+            item.querySelector('div').classList.add('shapes_close')
+        });
+    }
+
+    // Открытие фигур 
+    function openingShapes(figures, block){
+        block.classList.remove('shapes_close');
+
+        figures.forEach(el => {
+            const block = el.querySelector('div');
+            block.style.opacity = 1;
+            block.classList.add('shapes_collect')
+        })
+    }
+
+    // Cчетчик количества одинаковых фигур
+    function counterNumberShapes(figures){
+        let res = 0;
+
+        figures.forEach(el => {
+            const block = el.querySelector('div');
+
+            if(block.classList.contains('shapes_close')){}else{
+                res += 1;
+            }
+        })
+
+        return res;
+    }
+
+    // Добавление в массив фигуру
+    function addShapeArr(el, figureAttr, block){
+        el.classList.add('shapes_active');
+        block.classList.remove('shapes_close');
+        arr.push(figureAttr);
+    }
+
+    // Перебор фигур
+    function bustingShapes(block, figureAttr, el){
+        arr.forEach(item => {
+    
+            if(item === figureAttr){
+                arr.push(figureAttr);
+                block.classList.remove('shapes_close');
+                el.classList.add('shapes_active');
+            }else if(arr.length === 4){
+                block.classList.remove('shapes_close');
+                arr.splice(0,16);
+
+                setTimeout(() => {
+
+                    deletingAllActiveClass();
+
+                }, 300);
+            } else {
+                block.classList.remove('shapes_close');
+                arr.splice(0,16);
+            
+                setTimeout(() => {
+
+                    block.classList.add('shapes_close');
+
+                    deletingAllActiveClass();
+                }, 300);
+            }
+        })
+    }
+
+    // Проверка все ли фигуры открыты
+    function checkingShapes(){
+        const blocks = document.querySelectorAll('.shapes_collect');
+    
+        if(blocks.length === 16){
+            modal.classList.add('modal_active');
+        }
+    }
+
     const arr = [];
 
     blocksList.forEach(el => {
         el.addEventListener('click', function(e){
+
+            // Получение имени фигуры и дочерний блок
             const figureAttr = el.getAttribute('data-figure');
             const block = el.querySelector('div');
 
             if(el.classList.contains('shapes_active')){
             }else{  
 
-                const attrText = e.target.closest('.shapes__list').getAttribute('data-figure');
+                const figures = document.querySelectorAll(`[data-figure="${figureAttr}"]`)
 
-                const figures = document.querySelectorAll(`[data-figure="${attrText}"]`)
-
-                let res = 0;
-
-                figures.forEach(el => {
-                    const block = el.querySelector('div');
-
-                    if(block.classList.contains('shapes_close')){}else{
-                        res += 1;
-                    }
-                })
-
-                console.log(res);
+                let res = counterNumberShapes(figures);
 
                 if(res < 3){
-                    console.log(arr);
                     if(arr.length === 0){
-                        el.classList.add('shapes_active');
-                        block.classList.remove('shapes_close');
-                        arr.push(figureAttr);
-                    } else{
-                        arr.forEach(item => {
-    
-                            if(item === figureAttr){
-                                arr.push(figureAttr);
-                                block.classList.remove('shapes_close');
-                                el.classList.add('shapes_active');
-                            }else if(arr.length === 4){
-                                block.classList.remove('shapes_close');
-                                arr.splice(0,16);
-
-                                setTimeout(() => {
-
-                                    blocksList.forEach(item => {
-                                        item.classList.remove('shapes_active');
-                                        item.querySelector('div').classList.add('shapes_close')
-                                    });
-
-                                    console.log(5);
-
-                                }, 300);
-                            } else {
-                                block.classList.remove('shapes_close');
-                                arr.splice(0,16);
-                            
-                                setTimeout(() => {
-    
-                                    block.classList.add('shapes_close');
-                                    console.log(3);
-    
-                                    blocksList.forEach(item => {
-                                        item.classList.remove('shapes_active');
-                                        item.querySelector('div').classList.add('shapes_close')
-                                    });
-                                }, 300);
-                            }
-                        })
-                    }
-                } else {
-                    block.classList.remove('shapes_close');
-                    figures.forEach(el => {
-                        const block = el.querySelector('div');
-                        block.style.opacity = 1;
-                    })
-                }
+                        addShapeArr(el, figureAttr, block);
+                    } else bustingShapes(block, figureAttr, el);
+                } else openingShapes(figures, block);
             }
+
+            checkingShapes();
         });
     })
 
